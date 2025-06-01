@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee AI Helper</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .chat-bubble { max-width: 70%; }
+        .typing { animation: typing 1.5s infinite; }
+        @keyframes typing {
+            0%, 20% { opacity: 0.2; }
+            50% { opacity: 1; }
+            80%, 100% { opacity: 0.2; }
+        }
+        .tab-button { transition: all 0.3s ease; }
+        .tab-button:not(.active) { background-color: #f3f4f6; color: #374151; }
+        .tab-button.active { background-color: #3b82f6; color: white; }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white bg-opacity-80 backdrop-blur-md border-b border-gray-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center space-x-3">
+                    <div class="gradient-bg p-2 rounded-lg">
+                        <i class="fas fa-robot text-white text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-gray-900">AI Assistant</h1>
+                        <p class="text-sm text-gray-500">Your Employee Helper</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-sm">Active</span>
+                    <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white font-semibold">TC</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            <!-- Sidebar -->
+            <div class="lg:col-span-1">
+                <div class="bg-white bg-opacity-70 backdrop-blur-sm rounded-lg shadow-xl p-6">
+                    <div class="text-center mb-6">
+                        <div class="w-20 h-20 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white text-xl font-semibold mx-auto mb-4">TC</div>
+                        <h2 class="text-xl font-semibold text-gray-900">Theresa Calderon</h2>
+                        <p class="text-gray-600">HR Specialist</p>
+                        <span class="mt-2 bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm">Sales</span>
+                    </div>
+                    <div class="space-y-3 text-sm">
+                        <div class="flex items-center space-x-2 text-gray-600">
+                            <i class="fas fa-envelope"></i>
+                            <span>theresa.calderon@company.com</span>
+                        </div>
+                        <div class="flex items-center space-x-2 text-gray-600">
+                            <i class="fas fa-phone"></i>
+                            <span>+1-455-369-1986</span>
+                        </div>
+                        <div class="flex items-center space-x-2 text-gray-600">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>San Francisco</span>
+                        </div>
+                        <div class="flex items-center space-x-2 text-gray-600">
+                            <i class="fas fa-briefcase"></i>
+                            <span>ID: 1234</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="bg-white bg-opacity-70 backdrop-blur-sm rounded-lg shadow-xl p-4 mt-6">
+                    <h3 class="font-semibold text-gray-900 mb-4">Quick Actions</h3>
+                    <div class="space-y-2">
+                        <button class="w-full flex items-center p-3 hover:bg-white hover:bg-opacity-50 rounded-lg transition-colors" onclick="handleQuickAction('How do I request time off and what is my current PTO balance?')">
+                            <div class="p-2 rounded-lg bg-green-50 mr-3">
+                                <i class="fas fa-calendar text-green-600"></i>
+                            </div>
+                            <div class="text-left">
+                                <p class="font-medium text-sm text-gray-900">Time Off</p>
+                                <p class="text-xs text-gray-600">Check PTO balance and request leave</p>
+                            </div>
+                        </button>
+                        <button class="w-full flex items-center p-3 hover:bg-white hover:bg-opacity-50 rounded-lg transition-colors" onclick="handleQuickAction('Show me my salary details and compensation package')">
+                            <div class="p-2 rounded-lg bg-blue-50 mr-3">
+                                <i class="fas fa-dollar-sign text-blue-600"></i>
+                            </div>
+                            <div class="text-left">
+                                <p class="font-medium text-sm text-gray-900">Salary Info</p>
+                                <p class="text-xs text-gray-600">View compensation details</p>
+                            </div>
+                        </button>
+                        <button class="w-full flex items-center p-3 hover:bg-white hover:bg-opacity-50 rounded-lg transition-colors" onclick="handleQuickAction('What are my health insurance options and coverage details?')">
+                            <div class="p-2 rounded-lg bg-purple-50 mr-3">
+                                <i class="fas fa-shield-alt text-purple-600"></i>
+                            </div>
+                            <div class="text-left">
+                                <p class="font-medium text-sm text-gray-900">Benefits</p>
+                                <p class="text-xs text-gray-600">Health insurance and benefits</p>
+                            </div>
+                        </button>
+                        <button class="w-full flex items-center p-3 hover:bg-white hover:bg-opacity-50 rounded-lg transition-colors" onclick="handleQuickAction('How do I install new software on my computer?')">
+                            <div class="p-2 rounded-lg bg-orange-50 mr-3">
+                                <i class="fas fa-download text-orange-600"></i>
+                            </div>
+                            <div class="text-left">
+                                <p class="font-medium text-sm text-gray-900">Software Install</p>
+                                <p class="text-xs text-gray-600">Install applications and tools</p>
+                            </div>
+                        </button>
+                        <button class="w-full flex items-center p-3 hover:bg-white hover:bg-opacity-50 rounded-lg transition-colors" onclick="handleQuickAction('What career development opportunities are available to me?')">
+                            <div class="p-2 rounded-lg bg-emerald-50 mr-3">
+                                <i class="fas fa-chart-line text-emerald-600"></i>
+                            </div>
+                            <div class="text-left">
+                                <p class="font-medium text-sm text-gray-900">Career Growth</p>
+                                <p class="text-xs text-gray-600">Training and advancement</p>
+                            </div>
+                        </button>
+                        <button class="w-full flex items-center p-3 hover:bg-white hover:bg-opacity-50 rounded-lg transition-colors" onclick="handleQuickAction('What are my work schedule options and remote work policy?')">
+                            <div class="p-2 rounded-lg bg-indigo-50 mr-3">
+                                <i class="fas fa-clock text-indigo-600"></i>
+                            </div>
+                            <div class="text-left">
+                                <p class="font-medium text-sm text-gray-900">Work Schedule</p>
+                                <p class="text-xs text-gray-600">Hours and remote work options</p>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Panel -->
+            <div class="lg:col-span-3">
+                <!-- Tabs -->
+                <div class="bg-white bg-opacity-70 backdrop-blur-sm rounded-lg mb-6">
+                    <div class="flex">
+                        <button class="tab-button active flex-1 py-3 px-4 text-center font-medium rounded-l-lg" onclick="switchTab('chat')" id="chat-tab">
+                            <i class="fas fa-comments mr-2"></i>AI Chat
+                        </button>
+                        <button class="tab-button flex-1 py-3 px-4 text-center font-medium" onclick="switchTab('profile')" id="profile-tab">
+                            <i class="fas fa-user mr-2"></i>Profile
+                        </button>
+                        <button class="tab-button flex-1 py-3 px-4 text-center font-medium rounded-r-lg" onclick="switchTab('resources')" id="resources-tab">
+                            <i class="fas fa-file-text mr-2"></i>Resources
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Chat Tab -->
+                <div id="chat-content" class="tab-content">
+                    <div class="bg-white bg-opacity-70 backdrop-blur-sm rounded-lg shadow-xl h-96 flex flex-col">
+                        <div class="gradient-bg text-white p-4 rounded-t-lg">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-robot"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold">AI Assistant</h3>
+                                    <p class="text-sm text-blue-100">Always here to help</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="chat-messages" class="flex-1 p-4 overflow-y-auto">
+                            <div class="flex items-start space-x-3 mb-4">
+                                <div class="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white text-sm">
+                                    <i class="fas fa-robot"></i>
+                                </div>
+                                <div class="bg-gray-100 p-3 rounded-lg chat-bubble">
+                                    <p class="text-sm">Hello Theresa! I'm your AI assistant with access to your employee information. I can provide specific help with HR questions, benefits, time off, IT support, career development, and workplace policies. What would you like to know?</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-4 border-t">
+                            <div class="flex space-x-2">
+                                <input type="text" id="chat-input" placeholder="Ask me anything..." class="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <button onclick="sendMessage()" class="gradient-bg text-white px-4 py-2 rounded-lg hover:opacity-90 transition-opacity">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Profile Tab -->
+                <div id="profile-content" class="tab-content hidden">
+                    <div class="bg-white bg-opacity-70 backdrop-blur-sm rounded-lg shadow-xl p-6">
+                        <h3 class="text-lg font-semibold mb-4">Personal Information</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="text-sm font-medium text-gray-600">Full Name</label>
+                                    <p class="text-lg font-semibold text-gray-900">Theresa Calderon</p>
+                                </div>
+                                <div>
+                                    <label class="text-sm font-medium text-gray-600">Employee ID</label>
+                                    <p class="text-gray-900">1234</p>
+                                </div>
+                                <div>
+                                    <label class="text-sm font-medium text-gray-600">Email</label>
+                                    <p class="text-gray-900">theresa.calderon@company.com</p>
+                                </div>
+                            </div>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="text-sm font-medium text-gray-600">Department</label>
+                                    <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm ml-2">Sales</span>
+                                </div>
+                                <div>
+                                    <label class="text-sm font-medium text-gray-600">Role</label>
+                                    <p class="text-lg font-medium text-gray-900">HR Specialist</p>
+                                </div>
+                                <div>
+                                    <label class="text-sm font-medium text-gray-600">Salary</label>
+                                    <p class="text-2xl font-bold text-emerald-600">$64,900</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resources Tab -->
+                <div id="resources-content" class="tab-content hidden">
+                    <div class="bg-white bg-opacity-70 backdrop-blur-sm rounded-lg shadow-xl p-6">
+                        <h3 class="text-lg font-semibold mb-4">Employee Resources</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <button class="border border-gray-300 rounded-lg p-4 hover:bg-gray-50 transition-colors" onclick="handleQuickAction('Show me the employee handbook and company policies')">
+                                <i class="fas fa-file-text text-blue-600 text-2xl mb-2"></i>
+                                <div class="text-left">
+                                    <p class="font-medium">Employee Handbook</p>
+                                    <p class="text-sm text-gray-600">Company policies and procedures</p>
+                                </div>
+                            </button>
+                            <button class="border border-gray-300 rounded-lg p-4 hover:bg-gray-50 transition-colors" onclick="handleQuickAction('How do I submit an IT support ticket for technical issues?')">
+                                <i class="fas fa-laptop text-green-600 text-2xl mb-2"></i>
+                                <div class="text-left">
+                                    <p class="font-medium">IT Support</p>
+                                    <p class="text-sm text-gray-600">Technical help and support</p>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
